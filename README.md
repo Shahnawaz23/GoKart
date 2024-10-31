@@ -3,7 +3,6 @@
 GoKart is an e-commerce application built with Spring Boot and PostgreSQL. It provides features like customer registration, product management, and order processing to create a smooth shopping experience for users. This project aims to showcase a scalable, maintainable backend for online retail.
 
 **Technology Used**
-
 Backend: Spring Boot
 
 Database: PostgreSQL
