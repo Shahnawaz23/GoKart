@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/product")
 public class ProductController {
@@ -19,14 +21,17 @@ public class ProductController {
     @PostMapping
     public ResponseEntity addProduct(@RequestBody ProductRequest productRequest,
                                      @RequestParam("sellerEmail") String sellerEmail) {
-
-
-        try{
-            return new ResponseEntity<>(productService.addProduct(productRequest,sellerEmail), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(productService.addProduct(productRequest, sellerEmail), HttpStatus.CREATED);
+        } catch (SellerNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        catch (SellerNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+    }
 
+    // Add this new GET endpoint
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+        List<ProductResponse> products = productService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

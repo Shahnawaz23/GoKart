@@ -26,6 +26,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerResponse, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/age/{age}")
     public ResponseEntity findByAge(@PathVariable("age") int age) {
         List<CustomerResponse> customerResponses  = customerService.findByAge(age);
