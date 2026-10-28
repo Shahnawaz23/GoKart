@@ -1,11 +1,6 @@
 package com.example.GoKart.dto.request;
 
 import com.example.GoKart.model.Enum.Category;
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ProductRequest {
 
     String productName;
@@ -15,6 +10,34 @@ public class ProductRequest {
     Category category;
 
     int quantity;
+    public ProductRequest() {}
+
+    public ProductRequest(String productName, int price, Category category, int quantity) {
+        this.productName = productName;
+        this.price = price;
+        this.category = category;
+        this.quantity = quantity;
+    }
+
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private String productName;
+        private int price;
+        private Category category;
+        private int quantity;
+
+        public Builder productName(String productName) { this.productName = productName; return this; }
+
+        public Builder price(int price) { this.price = price; return this; }
+
+        public Builder category(Category category) { this.category = category; return this; }
+
+        public Builder quantity(int quantity) { this.quantity = quantity; return this; }
+
+        public ProductRequest build() { return new ProductRequest(productName, price, category, quantity); }
+    }
+
 
     public String getProductName() {
         return productName;

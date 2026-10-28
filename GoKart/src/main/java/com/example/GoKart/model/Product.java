@@ -5,39 +5,31 @@ import com.example.GoKart.model.Enum.Category;
 import com.example.GoKart.model.Enum.ProductStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.ArrayList;
 import java.util.List;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)   // to make fields private(methods, variables) it has least priority
 @Entity
-@Builder
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
-    String productName;
+    private String productName;
 
-    int price;
+    private int price;
 
-    int quantity;
-
-    @Enumerated(EnumType.STRING)
-    Category category;
+    private int quantity;
 
     @Enumerated(EnumType.STRING)
-    ProductStatus productStatus;
+    private Category category;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus productStatus;
 
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    Seller seller;
+    private Seller seller;
 
 
     @ManyToMany
@@ -45,7 +37,51 @@ public class Product {
     @JoinTable(name= "product_orders",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "order_entity_id"))
-    List<OrderEntity> orders = new ArrayList<>();
+    private List<OrderEntity> orders = new ArrayList<>();
+    public Product() {}
+
+    public Product(int id, String productName, int price, int quantity, Category category, ProductStatus productStatus, Seller seller, List<OrderEntity> orders) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+        this.productStatus = productStatus;
+        this.seller = seller;
+        this.orders = orders;
+    }
+
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private int id;
+        private String productName;
+        private int price;
+        private int quantity;
+        private Category category;
+        private ProductStatus productStatus;
+        private Seller seller;
+        private List<OrderEntity> orders;
+
+        public Builder id(int id) { this.id = id; return this; }
+
+        public Builder productName(String productName) { this.productName = productName; return this; }
+
+        public Builder price(int price) { this.price = price; return this; }
+
+        public Builder quantity(int quantity) { this.quantity = quantity; return this; }
+
+        public Builder category(Category category) { this.category = category; return this; }
+
+        public Builder productStatus(ProductStatus productStatus) { this.productStatus = productStatus; return this; }
+
+        public Builder seller(Seller seller) { this.seller = seller; return this; }
+
+        public Builder orders(List<OrderEntity> orders) { this.orders = orders; return this; }
+
+        public Product build() { return new Product(id, productName, price, quantity, category, productStatus, seller, orders); }
+    }
+
 
     public int getId() {
         return id;

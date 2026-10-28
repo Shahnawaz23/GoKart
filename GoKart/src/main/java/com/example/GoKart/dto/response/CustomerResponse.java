@@ -1,16 +1,28 @@
 package com.example.GoKart.dto.response;
-
-
-import lombok.*;
-import lombok.Builder;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CustomerResponse {
 
     String name;
     String email;
+    public CustomerResponse() {}
+
+    public CustomerResponse(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private String name;
+        private String email;
+
+        public Builder name(String name) { this.name = name; return this; }
+
+        public Builder email(String email) { this.email = email; return this; }
+
+        public CustomerResponse build() { return new CustomerResponse(name, email); }
+    }
+
 
     public String getName() {
         return name;

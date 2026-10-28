@@ -2,38 +2,67 @@ package com.example.GoKart.model;
 
 import jakarta.persistence.*;
 //import jdk.internal.org.objectweb.asm.tree.InsnList;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)   // to make fields private(methods, variables) it has least priority
 @Entity
-@Builder
 public class Seller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
-    String name;
-
-    @Column(unique = true, nullable = false)
-    String email;
+    private String name;
 
     @Column(unique = true, nullable = false)
-    String pan; 
+    private String email;
+
+    @Column(unique = true, nullable = false)
+    private String pan; 
 
     @CreationTimestamp         //sql date import contains only date not time
-    Date created;
+    private Date created;
 
     @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL)
-    List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
+    public Seller() {}
+
+    public Seller(int id, String name, String email, String pan, Date created, List<Product> products) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.pan = pan;
+        this.created = created;
+        this.products = products;
+    }
+
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private int id;
+        private String name;
+        private String email;
+        private String pan;
+        private Date created;
+        private List<Product> products;
+
+        public Builder id(int id) { this.id = id; return this; }
+
+        public Builder name(String name) { this.name = name; return this; }
+
+        public Builder email(String email) { this.email = email; return this; }
+
+        public Builder pan(String pan) { this.pan = pan; return this; }
+
+        public Builder created(Date created) { this.created = created; return this; }
+
+        public Builder products(List<Product> products) { this.products = products; return this; }
+
+        public Seller build() { return new Seller(id, name, email, pan, created, products); }
+    }
+
 
     public int getId() {
         return id;

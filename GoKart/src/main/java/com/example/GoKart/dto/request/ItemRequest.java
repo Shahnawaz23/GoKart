@@ -1,17 +1,15 @@
 package com.example.GoKart.dto.request;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.List;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class ItemRequest {
     int id;
     int requiredQuantity;
+
+    public ItemRequest() {}
+    public ItemRequest(int id, int requiredQuantity) {
+        this.id = id;
+        this.requiredQuantity = requiredQuantity;
+    }
+
 
     public int getId() {
         return id;
